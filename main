@@ -30,12 +30,20 @@ int main(){
       digit=strtok(nullptr,". ");
   }
   cout<<"\n";
-  cout<<"In BIN(2): "<<formout(transfer(byte[0],2))<<"."<<formout(transfer(byte[1],2))<<"."<<formout(transfer(byte[2],2))<<"."<<formout(transfer(byte[3],2))<<"\n";
-  cout<<"In HEX(16): "<<formout(transfer(byte[0],16))<<"."<<formout(transfer(byte[1],16))<<"."<<formout(transfer(byte[2],16))<<"."<<formout(transfer(byte[3],2))<<"\n";
-  cout<<"In OCT(8): "<<formout(transfer(byte[0],8))<<"."<<formout(transfer(byte[1],8))<<"."<<formout(transfer(byte[2],8))<<"."<<formout(transfer(byte[3],8))<<"\n";
+  cout<<"In BIN(2): ";
+  for(short i=0; i<4; ++i) cout<<formout(transfer(byte[i],2))<<".";
+  cout<<"\n";
+  cout.unsetf(ios::dec); cout.setf(ios::hex);
+  cout<<"In HEX(16): ";
+  for(short i=0; i<4; ++i) cout<<byte[i]<<".";
+  cout<<"\n";
+  cout.unsetf(ios::hex); cout.setf(ios::oct);
+  cout<<"In OCT(8): ";
+  for(short i=0; i<4; ++i) cout<<byte[i]<<".";
+  cout.unsetf(ios::oct); cout.setf(ios::dec);
   cout<<"\n";
   if(byte[0]<128){
-      if(byte[0]==10 && byte[1]<256 && byte[2]<256 && byte[3]<256) cout<<"!!!Common adress!!!\n";
+      if(byte[0]==10 && byte[0]<=126 && byte[1]<256 && byte[2]<256 && byte[3]<256) cout<<"!!!Common adress!!!\n";
       else cout<<"Unic adress\n";
       cout<<"\n";
       cout<<"A class:\n";

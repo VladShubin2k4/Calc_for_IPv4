@@ -53,7 +53,7 @@ int main(){
         }
         cout<<"\nHost ID = ";
         for(short i=cidr; i<32; ++i){
-            if(i%8==0 && i!=0) cout<<'.';
+            if(i%8==0) cout<<'.';
             cout<<ip[i];
         }
         cout<<"\n";

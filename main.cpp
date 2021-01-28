@@ -24,20 +24,20 @@ int main(){
     //freopen("ip-res.txt","w",stdout);
     ios::sync_with_stdio(false);
     int byte[4];
-    char dot, cmd[2]={};
+    char dot, cmd;
     for(short i=0; i<4; ++i){cin>>byte[i];if(i!=3) cin>>dot;}
     cout<<"In BIN(2): ";
     for(short i=0; i<4; ++i){cout<<formout(transfer(byte[i],2));if(i!=3) cout<<".";}
     cout.unsetf(ios::dec); cout.setf(ios::hex);
     cout<<"\nIn HEX(16): ";
-    for(short i=0; i<4; ++i){  cout<<byte[i]; if(i!=3) cout<<"."; }
+    for(short i=0; i<4; ++i){cout<<byte[i]; if(i!=3) cout<<"."; }
     cout.unsetf(ios::hex); cout.setf(ios::oct);
     cout<<"\nIn OCT(8): ";
-    for(short i=0; i<4; ++i){ cout<<byte[i]; if(i!=3) cout<<".";}
+    for(short i=0; i<4; ++i){cout<<byte[i]; if(i!=3) cout<<".";}
     cout.unsetf(ios::oct); cout.setf(ios::dec);
     cout<<"\nCIDR?\n";
     cin>>cmd;
-    if(cmd[0]=='y'){
+    if(cmd=='y'){
         short cidr,ip[32]={};
         cin>>cidr;
         for(short i=0; i<4; ++i){
@@ -48,21 +48,21 @@ int main(){
         }
         cout<<"Net ID = ";
         for(short i=0; i<cidr; ++i){
-            if((i%8==0 || i%16==0 || i%24==0) && i!=0) cout<<'.';
+            if(i%8==0 && i!=0) cout<<'.';
             cout<<ip[i];
         }
         cout<<"\nHost ID = ";
         for(short i=cidr; i<32; ++i){
-            if(i%8==0 || i%16==0 || i%24==0) cout<<'.';
+            if(i%8==0 && i!=0) cout<<'.';
             cout<<ip[i];
         }
+        cout<<"\n";
     }
     else{
     if(byte[0]<128){
-        if(byte[0]==10 && byte[0]<=126 && byte[1]<256 && byte[2]<256 && byte[3]<256) cout<<"\n!!!Common adress!!!\n";
+        if(byte[0]==10 && byte[0]<=126 && byte[1]<256 && byte[2]<256 && byte[3]<256) cout<<"\n!Common adress!\n";
         else cout<<"\nUnic adress\n";
-        cout<<"\nA class:\n";
-        cout<<"\tNet ID = "<<formout(transfer(byte[0],2))<<"\n";
+        cout<<"\nA class:\n\tNet ID = "<<formout(transfer(byte[0],2))<<"\n";
         cout<<"\tHost ID = ";
         for(short i=1; i<4; ++i){
             cout<<formout(transfer(byte[i],2));
@@ -70,22 +70,21 @@ int main(){
         }
         cout<<"\n";
     }else if(byte[0]<192){
-        if(byte[0]==172 && byte[1]<32 && byte[1]>15 && byte[2]<256 && byte[3]<256) cout<<"\n!!!Common adress!!!\n";
+        if(byte[0]==172 && byte[1]<32 && byte[1]>15 && byte[2]<256 && byte[3]<256) cout<<"\n!Common adress!\n";
         else cout<<"\nUnic adress\n";
-        cout<<"\nB class:\n";
-        cout<<"\tNet ID = "<<formout(transfer(byte[0],2))<<"."<<formout(transfer(byte[1],2))<<"\n";
+        cout<<"\nB class:\n\tNet ID = "<<formout(transfer(byte[0],2))<<"."<<formout(transfer(byte[1],2))<<"\n";
         cout<<"\tHost ID = "<<formout(transfer(byte[2],2))<<"."<<formout(transfer(byte[3],2))<<"\n";
     }else if(byte[0]<224){
-        if(byte[0]==192 && byte[1]==168 && byte[2]<256 && byte[3]<256) cout<<"\n!!!Common adress!!!\n";
+        if(byte[0]==192 && byte[1]==168 && byte[2]<256 && byte[3]<256) cout<<"\n!Common adress!\n";
         else cout<<"\nUnic adress\n";
-        cout<<"\nC class:\n";
-        cout<<"\tNet ID = ";
+        cout<<"\nC class:\n\tNet ID = ";
         for(short i=0; i<3; ++i){
             cout<<formout(transfer(byte[i],2));
             if(i!=2) cout<<".";
         }
         cout<<"\n\tHost ID = "<<formout(transfer(byte[3],2))<<"\n";
     }else cout<<"\tD/E class";
-    }
+  }
+  cin.get();cin.get();
   return 0;
 }

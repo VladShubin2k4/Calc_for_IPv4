@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <cstdio>
 using namespace std;
 
 int transfer(int byte,short radix){
@@ -7,18 +6,21 @@ int transfer(int byte,short radix){
   for(short i=0;byte!=0; ++i){res+=(byte%radix)*k;k*=10;byte/=radix;}
   return res;
 }
+
 int formout(int out){
    int radix=0,tmp=out;
    while(tmp>0){tmp/=10; ++radix;}
    for(int i=radix; i<8; ++i) cout<<0;
    return out;
 }
+
 int fastpow(int a, int n){
   if(n==0) return 1;
   if(n%2==1) return (a*fastpow(a,n-1));
   int tmp=fastpow(a,n/2);
   return (tmp*tmp);
 }
+
 void Info(int* byte){
     cout<<"In BIN(2): ";
     for(short i=0; i<4; ++i){cout<<formout(transfer(byte[i],2));if(i!=3) cout<<".";}
@@ -29,8 +31,8 @@ void Info(int* byte){
     cout<<"\nIn OCT(8): ";
     for(short i=0; i<4; ++i){cout<<byte[i]; if(i!=3) cout<<".";}
     cout.unsetf(ios::oct); cout.setf(ios::dec);
-    cout<<"\nCIDR?\n";
 }
+
 void CIDR(int* byte){
     short cidr,ip[32]={};
     cin>>cidr;
@@ -40,7 +42,7 @@ void CIDR(int* byte){
             ip[j]=octet/div;
         }
     }
-    cout<<"Net ID = ";
+    cout<<"\n\nNet ID = ";
     for(short i=0; i<cidr; ++i){
         if(i%8==0 && i!=0) cout<<'.';
         cout<<ip[i];
@@ -52,6 +54,7 @@ void CIDR(int* byte){
     }
     cout<<"\n";
 }
+
 void ClassOfIP(int* byte){
     if(byte[0]<128){
         if(byte[0]==10 && byte[0]<=126 && byte[1]<256 && byte[2]<256 && byte[3]<256) cout<<"\n!Common adress!\n";
@@ -81,14 +84,13 @@ void ClassOfIP(int* byte){
 }
 
 int main(){
-    //freopen("ip-res.txt","w",stdout);
     ios::sync_with_stdio(false);
     int byte[4];
-    char dot, cmd;
+    char dot, cmd='0';
     for(short i=0; i<4; ++i){cin>>byte[i];if(i!=3) cin>>dot;}
     Info(byte);
     cin>>cmd;
-    if(cmd=='y') CIDR(byte);
+    if(cmd=='/') CIDR(byte);
     else ClassOfIP(byte);
     cin.get();cin.get();
     return 0;
